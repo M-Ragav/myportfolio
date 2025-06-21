@@ -1265,3 +1265,20 @@ span > .abbri{
 .starter-section {
   /* Add your styles here */
 }
+
+
+/* contact forms news styles*/
+
+.load, .error-mess, .sent-mess {
+  display: none;
+  margin-top: 10px;
+}
+.load {
+  color: blue;
+}
+.error-mess {
+  color: red;
+}
+.sent-mess {
+  color: green;
+}

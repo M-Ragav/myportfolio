@@ -248,3 +248,50 @@ function calculateAge() {
     window.history.back();
     window.location.href = "index.html#"+a;
   }
+
+
+// contact form new edits
+  const form = document.querySelector('.php-email-form');
+  const loading = document.querySelector('.load');
+  const errorMessage = document.querySelector('.error-mess');
+  const sentMessage = document.querySelector('.sent-mess');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    loading.style.display = 'block';
+    errorMessage.style.display = 'none';
+    sentMessage.style.display = 'none';
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      loading.style.display = 'none';
+
+      if (response.ok) {
+        sentMessage.style.display = 'block';
+        form.reset();
+      } else {
+        const data = await response.json();
+        if (data.errors) {
+          errorMessage.textContent = data.errors.map(e => e.message).join(", ");
+        } else {
+          errorMessage.textContent = 'Form submission failed. Please try again.';
+        }
+        errorMessage.style.display = 'block';
+      }
+    } catch (error) {
+      loading.style.display = 'none';
+      errorMessage.textContent = 'Could not send the message. Please check your network or try later.';
+      errorMessage.style.display = 'block';
+    }
+  });
+
